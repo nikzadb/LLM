@@ -2,6 +2,7 @@ langchain
 google.generativeai
 langchain-google-genai
 langchain-community
+langchain_chroma
 chromadb
 pytest
 streamlit
