@@ -117,11 +117,11 @@ if send_button and user_input:
         response = chatbot.generate_response(user_input)
         add_message(role="assistant", content=response['response'])
         
-    st.experimental_rerun()
+    st.rerun()
 
 # Add a clear chat button
 if st.button("Clear Chat"):
     chatbot.clear_memory()
     st.session_state.chat_history = []
-    st.experimental_rerun()
+    st.rerun()
 
