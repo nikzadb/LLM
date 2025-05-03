@@ -1,13 +1,15 @@
 import os
 import streamlit as st
-import time
 from datetime import datetime
+from dotenv import load_dotenv
 
 import google.generativeai as genai
 
 from src.utils import ChatbotConfig
 from src.chatbot import EnhancedChatbot
 
+# Load environment variables from .env file (if available)
+load_dotenv('.env')
 
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 genai.configure(api_key=GOOGLE_API_KEY)
