@@ -128,7 +128,7 @@ celerybeat.pid
 
 # Environments
 .env
-.venv
+.venv*
 env/
 venv/
 ENV/
@@ -176,4 +176,6 @@ poetry.toml
 # LSP config files
 pyrightconfig.json
 
-chroma_langchain_db/
+# Folders
+.streamlit/
+chroma*
