@@ -1,8 +1,5 @@
-import os
-from typing import Dict, List, Any, Optional
+from typing import Dict, Any, Optional
 import logging
-from dataclasses import dataclass
-from datetime import datetime
 
 from langchain_google_genai import (
     ChatGoogleGenerativeAI, 
@@ -20,20 +17,11 @@ logger = logging.getLogger(__name__)
 
 
 class EnhancedChatbot:
-    """Chatbot with enhanced memory capabilities."""
+    """Chatbot with enhanced short-term and long-term memories."""
 
     def __init__(self, config: Optional[ChatbotConfig] = None):
-        """Initialise the chatbot."""
+
         self.config = config or ChatbotConfig.from_env()
-        self._setup_components()
-
-    @staticmethod
-    def format_conversation_history(history: Dict[str, Any]) -> str:
-        """Format conversation history for display."""
-        return history.get('history', '')
-
-    def _setup_components(self) -> None:
-        """Set up chatbot components."""
 
         self.llm = ChatGoogleGenerativeAI(
             model=self.config.model_name,
@@ -61,6 +49,7 @@ class EnhancedChatbot:
 
     def _create_prompt_template(self) -> PromptTemplate:
         """Create the prompt template for the chatbot."""
+
         template = """You are a helpful AI assistant with memory of past converstaions.
         
         Relevant past conversations:
@@ -69,12 +58,12 @@ class EnhancedChatbot:
         Recent conversation:
         {recent_history}
 
-        Human: {input}
+        Human: {user_input}
         AI Assistant:
         """
 
         return PromptTemplate(
-            input_variables=["relevant_memories", "recent_history", "input"],
+            input_variables=["relevant_memories", "recent_history", "user_input"],
             template=template
         )
 
@@ -83,14 +72,13 @@ class EnhancedChatbot:
         try:
             relevant_memories = self.memory.get_relevant_memories(user_input)
 
-            recent_history = self.__class__.format_conversation_history(
-                self.memory.get_conversation_history()
-            )
+            recent_history = self.memory.get_conversation_history().get('history', '')
+
 
             prompt = self.prompt_template.format(
                 relevant_memories=relevant_memories,
                 recent_history=recent_history,
-                input=user_input
+                user_input=user_input
             )
 
             # Generate response
@@ -120,6 +108,5 @@ class EnhancedChatbot:
 
     def get_conversation_history(self) -> str:
         """Get the formated conversation history."""
-        return self.__class__.format_conversation_history(
-            self.memory.get_conversation_history
-        )
+        return self.memory.get_conversation_history.get('history', '')
+    
