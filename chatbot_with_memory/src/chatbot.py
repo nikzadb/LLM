@@ -41,7 +41,6 @@ class EnhancedChatbot:
 
         self.memory = ChatbotMemory(
             vector_store=self.vector_store,
-            embeddings=self.embeddings,
             memory_k=self.config.memory_k
         )
 

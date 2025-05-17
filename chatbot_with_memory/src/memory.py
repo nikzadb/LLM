@@ -11,10 +11,9 @@ logger = logging.getLogger(__name__)
 class ChatbotMemory:
     """Memory management for the chatbot."""
 
-    def __init__(self, embeddings, vector_store: Chroma, memory_k: int = 3):
+    def __init__(self, vector_store: Chroma, memory_k: int = 3):
 
         self.vector_store = vector_store
-        self.embeddings = embeddings
         self.memory_k = memory_k
         self.short_term_memory = ConversationBufferMemory()
 
