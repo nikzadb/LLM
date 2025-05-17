@@ -25,32 +25,31 @@ def mock_embeddings():
 
 
 @pytest.fixture
-def chatbot_memory(mock_vector_store, mock_embeddings):
+def chatbot_memory(mock_vector_store):
     """Create a ChatbotMemory instance with mocks."""
     return ChatbotMemory(
         vector_store=mock_vector_store,
-        embeddings=mock_embeddings,
         memory_k=3
     )
 
 
 def test_add_to_memory(chatbot_memory, mock_vector_store):
-    """Test adding to memory."""
+
     chatbot_memory.add_to_memory("Hello", "Hi there!")
     
-    # Check that vector store was called
+    # # Check that vector store was called
     mock_vector_store.add_texts.assert_called_once()
-    call_args = mock_vector_store.add_texts.call_args[0][0]
-    assert call_args == ["Human: Hello\nAI: Hi there!"]
+    call_args = mock_vector_store.add_texts.call_args[1]['texts']
+    assert call_args == ["Human: Hello\nAi: Hi there!"]
 
 
 def test_get_relevant_memories(chatbot_memory, mock_vector_store):
-    """Test getting relevant memories."""
-    result = chatbot_memory.get_relevant_memories("test query")
+
+    short_mem = chatbot_memory.get_relevant_memories("test query")
+    assert short_mem == "Unknown time: Human: Test\nAI: Response"
     
     # Check that similarity search was called
-    mock_vector_store.similarity_search.assert_called_once_with("test query", k=3)
-    assert result == "Human: Test\nAI: Response"
+    long_mem = mock_vector_store.similarity_search.assert_called_once_with("test query", k=3)
 
 
 def test_get_conversation_history(chatbot_memory):
