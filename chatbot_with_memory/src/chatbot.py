@@ -102,11 +102,8 @@ class EnhancedChatbot:
             }
         
     def clear_memory(self) -> None:
-        """Clear the chatbot's memory."""
+        """Clear the chatbot's memory."""                      
         self.memory.clear_short_term_memory()
         logger.info("Short-term memory cleared")
 
-    def get_conversation_history(self) -> str:
-        """Get the formated conversation history."""
-        return self.memory.get_conversation_history.get('history', '')
     

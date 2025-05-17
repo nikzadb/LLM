@@ -1,12 +1,10 @@
-import os
-from typing import Dict, List, Any
+from typing import Dict, Any
 import logging
 from datetime import datetime
 
 from langchain.memory import ConversationBufferMemory
 
 from langchain_chroma import Chroma
-from langchain.schema import Document
 
 logger = logging.getLogger(__name__)
 
