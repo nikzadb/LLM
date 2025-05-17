@@ -25,11 +25,10 @@ def mock_embeddings():
 
 
 @pytest.fixture
-def chatbot_memory(mock_vector_store, mock_embeddings):
+def chatbot_memory(mock_vector_store):
     """Create a ChatbotMemory instance with mocks."""
     return ChatbotMemory(
         vector_store=mock_vector_store,
-        embeddings=mock_embeddings,
         memory_k=3
     )
 
@@ -46,9 +45,8 @@ def test_add_to_memory(chatbot_memory, mock_vector_store):
 
 def test_get_relevant_memories(chatbot_memory, mock_vector_store):
 
-    import pdb; pdb.set_trace()
     short_mem = chatbot_memory.get_relevant_memories("test query")
-    assert short_mem == "Human: Test\nAI: Response"
+    assert short_mem == "Unknown time: Human: Test\nAI: Response"
     
     # Check that similarity search was called
     long_mem = mock_vector_store.similarity_search.assert_called_once_with("test query", k=3)
