@@ -81,7 +81,8 @@ class EnhancedChatbot:
             )
 
             # Generate response
-            response = self.llm.predict(prompt)
+            response = self.llm.invoke(prompt)
+            response = response.content            
 
             # Add to memory
             self.memory.add_to_memory(user_input, response)
